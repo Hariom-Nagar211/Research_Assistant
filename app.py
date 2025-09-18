@@ -3,10 +3,7 @@ import os
 from typing import List, Dict, Any
 from datetime import datetime
 import json
-from dotenv import load_dotenv
-
-# Load environment variables from .env file
-load_dotenv()
+import streamlit as st  
 
 # LangChain imports
 from langchain_groq import ChatGroq
@@ -306,8 +303,8 @@ def main():
     st.markdown("Powered by LangChain + LangGraph")
     
     # Load API keys from environment variables
-    groq_api_key = os.getenv("GROQ_API_KEY")
-    tavily_api_key = os.getenv("TAVILY_API_KEY")
+    groq_api_key = st.secrets["GROQ_API_KEY"]
+    tavily_api_key = st.secrets["TAVILY_API_KEY"]
     
     # Check if API keys are provided
     if not groq_api_key or not tavily_api_key:
@@ -468,4 +465,5 @@ def main():
         st.sidebar.metric("Completed Researches", len(st.session_state.research_history))
 
 if __name__ == "__main__":  # Fixed: __main__ instead of _main_
+
     main()
